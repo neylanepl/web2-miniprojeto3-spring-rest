@@ -25,7 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.jeanlima.springrestapi.model.Produto;
 import com.jeanlima.springrestapi.repository.ProdutoRepository;
-import com.jeanlima.springrestapi.rest.dto.AtualizacaoDescricaoProdutoDTO;
+import com.jeanlima.springrestapi.rest.dto.AtualizacaoDescricaoPrecoProdutoDTO;
 import com.jeanlima.springrestapi.service.ProdutoService;
 
 
@@ -62,11 +62,11 @@ public class ProdutoController {
 
     @PatchMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateDescricao(@PathVariable Integer id ,
-                             @RequestBody AtualizacaoDescricaoProdutoDTO dto){
+    public void updateDescricaoPreco(@PathVariable Integer id ,
+                             @RequestBody AtualizacaoDescricaoPrecoProdutoDTO dto){
         String novaDescricao = dto.getDescricao();
         BigDecimal novoPreco = dto.getPreco();
-        service.atualizaDescricao(id, novaDescricao,novoPreco);
+        service.atualizaDescricaoPreco(id, novaDescricao,novoPreco);
     }
 
     @DeleteMapping("{id}")

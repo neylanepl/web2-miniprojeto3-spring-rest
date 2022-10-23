@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AtualizacaoDescricaoProdutoDTO {
+public class AtualizacaoDescricaoPrecoProdutoDTO {
     private String descricao;
     private BigDecimal preco;
 }
