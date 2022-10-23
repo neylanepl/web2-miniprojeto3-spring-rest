@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.jeanlima.springrestapi.enums.StatusPedido;
 import com.jeanlima.springrestapi.model.ItemPedido;
 import com.jeanlima.springrestapi.model.Pedido;
+import com.jeanlima.springrestapi.repository.PedidoRepository;
 import com.jeanlima.springrestapi.rest.dto.AtualizacaoStatusPedidoDTO;
 import com.jeanlima.springrestapi.rest.dto.InformacaoItemPedidoDTO;
 import com.jeanlima.springrestapi.rest.dto.InformacoesPedidoDTO;
@@ -33,6 +35,9 @@ import com.jeanlima.springrestapi.service.PedidoService;
 public class PedidoController {
 
     @Autowired
+    private PedidoRepository pedidos;
+
+    @Autowired
     private PedidoService service;
 
     @PostMapping
@@ -40,6 +45,19 @@ public class PedidoController {
     public Integer save( @RequestBody PedidoDTO dto ){
         Pedido pedido = service.salvar(dto);
         return pedido.getId();
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete( @PathVariable Integer id ){
+        pedidos.findById(id)
+                .map( pedido -> {
+                    pedidos.delete(pedido );
+                    return pedido;
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Pedido não encontrado") );
+
     }
 
     @GetMapping("{id}")
