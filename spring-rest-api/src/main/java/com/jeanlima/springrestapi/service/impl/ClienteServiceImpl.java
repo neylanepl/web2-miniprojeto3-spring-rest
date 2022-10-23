@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.jeanlima.springrestapi.exception.RegraNegocioException;
 import com.jeanlima.springrestapi.model.Cliente;
 import com.jeanlima.springrestapi.repository.ClienteRepository;
-import com.jeanlima.springrestapi.rest.dto.AtualizacaoNomeClienteDTO;
+import com.jeanlima.springrestapi.rest.dto.ClienteSeusPedidosDTO;
 import com.jeanlima.springrestapi.service.ClienteService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ClienteServiceImpl implements ClienteService{
     private final ClienteRepository clientesRepository;
     
     @Override
-    public Cliente salvar(AtualizacaoNomeClienteDTO dto) {
+    public Cliente salvar(ClienteSeusPedidosDTO dto) {
         // TODO Auto-generated method stub
         return null;
     }

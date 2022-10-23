@@ -27,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.jeanlima.springrestapi.model.Cliente;
 import com.jeanlima.springrestapi.repository.ClienteRepository;
 import com.jeanlima.springrestapi.service.ClienteService;
-import com.jeanlima.springrestapi.rest.dto.AtualizacaoNomeClienteDTO;
+import com.jeanlima.springrestapi.rest.dto.ClienteSeusPedidosDTO;
 
 @RequestMapping("/api/clientes")
 @RestController //anotação especializadas de controller - todos já anotados com response body!
@@ -46,6 +46,11 @@ public class ClienteController {
                 .orElseThrow(() -> //se nao achar lança o erro!
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Cliente não encontrado"));
+    }
+
+    @GetMapping("/{id}/pedidos")
+    public ClienteSeusPedidosDTO getClientePedidos(@PathVariable Integer id) {
+        return new ClienteSeusPedidosDTO(service.getClienteById(id));
     }
 
     @PostMapping

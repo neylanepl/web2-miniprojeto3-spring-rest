@@ -29,7 +29,6 @@ import com.jeanlima.springrestapi.repository.ClienteRepository;
 import com.jeanlima.springrestapi.repository.EstoqueRepository;
 import com.jeanlima.springrestapi.service.ClienteService;
 import com.jeanlima.springrestapi.service.EstoqueService;
-import com.jeanlima.springrestapi.rest.dto.AtualizacaoNomeClienteDTO;
 import com.jeanlima.springrestapi.rest.dto.AtualizacaoQuantidadeEstoqueDTO;
 
 @RequestMapping("/api/estoque")
@@ -39,7 +38,7 @@ public class EstoqueController {
     @Autowired
     private EstoqueRepository estoqueRepository;
 
-    @Autowired
+    
     private EstoqueService estoqueService;
 
     @GetMapping("{id}")
