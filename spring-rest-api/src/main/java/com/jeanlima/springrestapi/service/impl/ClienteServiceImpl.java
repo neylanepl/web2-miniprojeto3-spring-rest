@@ -1,6 +1,12 @@
 package com.jeanlima.springrestapi.service.impl;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.jeanlima.springrestapi.exception.RegraNegocioException;
 import com.jeanlima.springrestapi.model.Cliente;
@@ -22,12 +28,30 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    public void atualizaNome(Integer id, String nome) {
-        clientesRepository
-            .findById(id)
-            .map( cliente -> {
-                cliente.setNome(nome);
-                return clientesRepository.save(cliente);
-            }).orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
+    public Cliente getClienteById( Integer id ){
+        return clientesRepository
+                .findById(id)
+                .orElseThrow(() -> //se nao achar lança o erro!
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Cliente não encontrado"));
+    }
+
+    @Override
+    public void atualizar(Cliente clienteExistente, Map<Object, Object> camposCliente) {
+
+        camposCliente.forEach((key, value) -> {
+            Field campo = ReflectionUtils.findField(Cliente.class, (String) key);
+            campo.setAccessible(true);
+            ReflectionUtils.setField(campo, camposCliente, value);
+        });
+        clientesRepository.save(clienteExistente);
+
+
+        // clientesRepository
+        //     .findById(id)
+        //     .map( cliente -> {
+        //         cliente.setNome(nome);
+        //         return clientesRepository.save(cliente);
+        //     }).orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
     }
 }

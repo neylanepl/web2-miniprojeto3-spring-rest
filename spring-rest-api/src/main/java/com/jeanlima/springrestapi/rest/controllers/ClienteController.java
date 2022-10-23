@@ -1,6 +1,7 @@
 package com.jeanlima.springrestapi.rest.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,10 +83,9 @@ public class ClienteController {
 
     @PatchMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateNome(@PathVariable Integer id ,
-                             @RequestBody AtualizacaoNomeClienteDTO dto){
-        String novoNome = dto.getNome();
-        service.atualizaNome(id, novoNome);
+    public void updatePatch(@PathVariable Integer id , @RequestBody Map<Object, Object> camposCliente){
+        Cliente clienteExistente = service.getClienteById(id);
+        service.atualizar(clienteExistente, camposCliente);
     }
 
     @GetMapping
