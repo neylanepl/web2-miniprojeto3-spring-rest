@@ -43,6 +43,15 @@ public class PedidoServiceImpl implements PedidoService {
                 .orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
 
         Pedido pedido = new Pedido();
+
+        Double valorTotal = 0.0;
+        for (ItemPedidoDTO itemPedidoDTO : dto.getItems()) {
+            Produto produto = produtosRepository
+                    .findById(itemPedidoDTO.getProduto())
+                    .orElseThrow(() -> new RegraNegocioException("Código de produto inválido: " + itemPedidoDTO.getProduto()));
+                    valorTotal += produto.getPreco().doubleValue() * itemPedidoDTO.getQuantidade();
+        }
+
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);

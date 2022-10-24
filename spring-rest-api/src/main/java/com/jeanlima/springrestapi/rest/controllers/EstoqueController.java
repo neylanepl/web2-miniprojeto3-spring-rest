@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,11 @@ public class EstoqueController {
                 .orElseThrow(() -> //se nao achar lança o erro!
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Estoque não encontrado"));
+    }
+
+    @GetMapping("/filtrarEstoqueNomeProduto/{nome}")
+    public List<Estoque> filtrarEstoqueNomeProduto(@RequestParam String nome) {
+        return estoqueService.filtrarEstoqueNomeProduto(nome);
     }
 
     @PostMapping
@@ -103,4 +109,5 @@ public class EstoqueController {
         return estoqueRepository.findAll(example);
     }
 
+   
 }
